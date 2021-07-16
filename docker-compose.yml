@@ -1,0 +1,25 @@
+version: '3'
+services:
+  db:
+    image: postgres:11.5
+    environment:
+      - POSTGRES_PORT=5432
+      - POSTGRES_DB=sample
+      - POSTGRES_USER=sample-user
+      - POSTGRES_PASSWORD=password
+    ports:
+      - 5432:5432
+  web:
+    image: rails-app:0.1
+    ports:
+      - 3000:3000
+    depends_on:
+      - db
+    links:
+      - db
+    environment:
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_NAME=sample
+      - DB_USER=sample-user
+      - DB_PASSWORD=password
